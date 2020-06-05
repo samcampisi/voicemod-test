@@ -2,12 +2,12 @@
   <div class="home-view-container">
     <h1>Voices</h1>
 
-    <b-container class="bv-example-row col-xs-12" fluid="sm">
+    <b-container class="bv-example-row" fluid="sm">
       <b-row>
         <b-col
           v-for="(voice, index) in voices"
           :key="voice.name"
-          class="col-6 col-md-2 d-flex justify-content-center"
+          class="col-6 col-md-3 col-lg-2 d-flex justify-content-center column-container"
         >
           <div
             class="item-container"
@@ -77,6 +77,9 @@ export default {
   text-align: center;
   color: white;
 }
+.column-container {
+  padding-top: 10px;
+}
 .item-container:hover {
   cursor: pointer;
 }
@@ -100,12 +103,12 @@ export default {
 }
 .favorite-container {
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   background-color: #f6f6f6;
   z-index: 0;
-  top: 0;
-  right: 0;
+  top: 5px;
+  right: 5px;
   border-radius: 50%;
 }
 .favorite-icon {
@@ -121,7 +124,8 @@ export default {
 .fade-leave-active {
   transition: opacity 0.25s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>
