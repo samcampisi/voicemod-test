@@ -4,16 +4,39 @@
 
     <b-container class="bv-example-row col-xs-12" fluid="sm">
       <b-row>
-        <b-col v-for="voice in voices" :key="voice.name" class="col-6 col-md-2">
-          <div class="item-container">
-            <img
-              class="icon"
-              :class="[
-                selected && voice.name === selected.name && 'icon-selected',
-              ]"
-              :src="require(`@/assets/${voice.icon}`)"
-              @click="selectVoice(voice)"
-            />
+        <b-col
+          v-for="(voice, index) in voices"
+          :key="voice.name"
+          class="col-6 col-md-2 d-flex justify-content-center"
+        >
+          <div
+            class="item-container"
+            @mouseover="hovering = index"
+            @mouseout="hovering = null"
+          >
+            <div>
+              <img
+                class="icon"
+                :class="[
+                  selected && voice.name === selected.name && 'icon-selected',
+                ]"
+                :src="require(`@/assets/${voice.icon}`)"
+                @click="selectVoice(voice)"
+              />
+
+              <transition name="fade">
+                <div
+                  class="favorite-container"
+                  v-show="hovering === index"
+                  @click="addFavorite(voice)"
+                >
+                  <img
+                    :src="require(`@/assets/voice-favourite.svg`)"
+                    class="favorite-icon"
+                  />
+                </div>
+              </transition>
+            </div>
 
             <p class="icon-text">{{ voice.name }}</p>
           </div>
@@ -30,6 +53,7 @@ export default {
   data() {
     return {
       selected: null,
+      hovering: null,
     };
   },
   computed: {
@@ -38,6 +62,7 @@ export default {
   methods: {
     selectVoice(voice) {
       this.selected = voice;
+      this.hovering = null;
     },
   },
 };
@@ -52,26 +77,51 @@ export default {
   text-align: center;
   color: white;
 }
-.item-container {
-  margin: 15;
-}
-.icon {
-  background-color: #ededed;
-  border-radius: 50%;
-  border: 5px solid transparent;
-}
-.icon:hover {
-  background-color: lightblue;
+.item-container:hover {
   cursor: pointer;
 }
+.icon {
+  background-color: #d2d2d2;
+  border-radius: 50%;
+  width: 110px;
+  height: 110px;
+  position: relative;
+  z-index: 1;
+}
 .icon-selected {
-  border: 5px solid #2ed2ff;
+  background-color: #2ed2ff;
 }
 .icon-text {
-  margin-top: 5px;
-  font-size: 15px;
-  font-weight: 600;
-  color: #ededed;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #c5c5c5;
   text-align: center;
+}
+.favorite-container {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-color: #f6f6f6;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  border-radius: 50%;
+}
+.favorite-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 25px;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
