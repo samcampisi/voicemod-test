@@ -1,7 +1,5 @@
 <template>
-  <div id="app">
-    <VoicesScreen msg="Welcome to Your Vue.js App" />
-  </div>
+  <VoicesScreen msg="Welcome to Your Vue.js App" />
 </template>
 
 <script>
