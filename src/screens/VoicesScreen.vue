@@ -38,6 +38,19 @@
       </b-collapse>
     </b-navbar>
 
+    <div v-if="searchQuery.length">
+      <VoiceList :title="`Results for ${searchQuery}`" :items="search()" />
+    </div>
+    <div
+      v-else-if="
+        selectedOrder === 'ascending' || selectedOrder === 'descending'
+      "
+    >
+      <VoiceList
+        :title="`In ${selectedOrder} order`"
+        :items="sortVoices(selectedOrder)"
+      />
+    </div>
     <div v-if="!searchQuery.length">
       <VoiceList
         v-if="favorites.length"
@@ -46,14 +59,11 @@
       />
       <VoiceList title="Pro Voices" :items="voices" />
     </div>
-    <div v-if="searchQuery.length">
-      <VoiceList :title="`Results for ${searchQuery}`" :items="search()" />
-    </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import VoiceList from '../components/VoiceList.vue';
 
 export default {
@@ -74,9 +84,11 @@ export default {
   },
   computed: {
     ...mapState(['voices', 'favorites']),
+    ...mapGetters(['sortVoices']),
   },
   methods: {
     search() {
+      this.selectedOrder = 'all';
       return this.voices.filter(item =>
         item.name.toLowerCase().includes(this.searchQuery.toLowerCase()),
       );

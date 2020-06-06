@@ -32,7 +32,7 @@ export default {
 @media (max-width: 767px) {
   .form-inline .form-group {
     display: inline-block;
-    margin-bottom: 100px;
+    margin-bottom: 0px;
     vertical-align: middle;
   }
 }
