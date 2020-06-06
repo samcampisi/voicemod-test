@@ -31,13 +31,16 @@
             :options="orderOptions"
           ></b-form-select>
 
-          <b-nav-item href="#"
+          <b-nav-item
+            @click="toggleRandom()"
+            :class="[showRandom && 'random-button-selected']"
             ><img :src="require(`@/assets/button-random.svg`)"
           /></b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
 
+    <VoiceList v-if="showRandom" title="Random Voice" :items="[randomItem]" />
     <div v-if="searchQuery.length">
       <VoiceList :title="`Results for ${searchQuery}`" :items="search()" />
     </div>
@@ -80,11 +83,13 @@ export default {
         { value: 'ascending', text: 'Ascending Order' },
         { value: 'descending', text: 'Descending Order' },
       ],
+      showRandom: false,
+      randomItem: null,
     };
   },
   computed: {
     ...mapState(['voices', 'favorites']),
-    ...mapGetters(['sortVoices']),
+    ...mapGetters(['sortVoices', 'getRandomVoice']),
   },
   methods: {
     search() {
@@ -95,6 +100,14 @@ export default {
     },
     resetSearch() {
       this.searchQuery = '';
+    },
+    toggleRandom() {
+      if (!this.showRandom) {
+        this.randomItem = this.getRandomVoice();
+      } else {
+        this.randomItem = null;
+      }
+      this.showRandom = !this.showRandom;
     },
   },
 };
@@ -129,5 +142,9 @@ export default {
 }
 .cancel-button:hover {
   cursor: pointer;
+}
+.random-button-selected {
+  background-color: #2ed2ff;
+  border-radius: 50%;
 }
 </style>

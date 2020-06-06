@@ -26,4 +26,7 @@ export default {
       return voices;
     };
   },
+  getRandomVoice: state => {
+    return () => state.voices[Math.floor(Math.random() * state.voices.length)];
+  },
 };
