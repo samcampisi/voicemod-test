@@ -1,6 +1,6 @@
-import voices from "../data/voices";
+import voices from '../data/voices';
 
 export default {
   voices,
-  favorites: [],
+  favorites: new Map(),
 };

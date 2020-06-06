@@ -28,10 +28,14 @@
                 <div
                   class="favorite-container"
                   v-show="hovering === index"
-                  @click="addFavorite(voice)"
+                  @click="toggleFavorite(voice)"
                 >
                   <img
-                    :src="require(`@/assets/voice-favourite.svg`)"
+                    :src="
+                      favorites.has(voice.name)
+                        ? require(`@/assets/voice-favourite.svg`)
+                        : require(`@/assets/voice-favourite-off.svg`)
+                    "
                     class="favorite-icon"
                   />
                 </div>
@@ -47,9 +51,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from 'vuex';
 export default {
-  name: "voices",
+  name: 'voices',
   data() {
     return {
       selected: null,
@@ -57,12 +61,20 @@ export default {
     };
   },
   computed: {
-    ...mapState(["voices", "favorites"]),
+    ...mapState(['voices', 'favorites']),
   },
   methods: {
+    ...mapActions(['addFavorite', 'removeFavorite']),
     selectVoice(voice) {
       this.selected = voice;
       this.hovering = null;
+    },
+    toggleFavorite(voice) {
+      if (this.favorites.has(voice.name)) {
+        this.removeFavorite(voice.name);
+      } else {
+        this.addFavorite(voice);
+      }
     },
   },
 };
