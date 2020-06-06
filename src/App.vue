@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import VoicesScreen from "./components/VoicesScreen.vue";
+import VoicesScreen from './screens/VoicesScreen.vue';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     VoicesScreen,
   },
