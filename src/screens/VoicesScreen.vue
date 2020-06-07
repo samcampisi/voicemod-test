@@ -4,9 +4,9 @@
       toggleable="lg"
       type="dark"
       variant="info"
-      class="nav-container col-12 col-lg-6 mx-auto"
+      class="nav-container col-12 mx-auto"
     >
-      <b-nav-form class="search-container">
+      <div class="search-container col-9 col-sm-8 col-md-6 col-lg-4 col-xl-3">
         <img :src="require(`@/assets/search.svg`)" />
         <b-form-input
           size="sm"
@@ -19,7 +19,7 @@
           @click="resetSearch()"
           class="cancel-button"
         />
-      </b-nav-form>
+      </div>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -183,6 +183,7 @@ export default {
   background-color: black;
   border-radius: 20px;
   padding: 5px 15px 5px 5px;
+  display: flex;
 }
 .search-input {
   background-color: black;

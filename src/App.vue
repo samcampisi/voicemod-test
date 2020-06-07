@@ -22,18 +22,4 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-@media (max-width: 767px) {
-  .form-inline .form-control {
-    display: inline-block;
-    width: auto;
-    vertical-align: middle;
-  }
-}
-@media (max-width: 767px) {
-  .form-inline .form-group {
-    display: inline-block;
-    margin-bottom: 0px;
-    vertical-align: middle;
-  }
-}
 </style>
