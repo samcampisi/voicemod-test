@@ -29,17 +29,17 @@
 
             <transition name="fade">
               <div
-                class="favorite-container"
+                class="favourite-container"
                 v-show="hovering === index"
-                @click="toggleFavorite(voice)"
+                @click="toggleFavourite(voice)"
               >
                 <img
                   :src="
-                    isFavorite(voice)
+                    isFavourite(voice)
                       ? require(`@/assets/voice-favourite.svg`)
                       : require(`@/assets/voice-favourite-off.svg`)
                   "
-                  class="favorite-icon"
+                  class="favourite-icon"
                 />
               </div>
             </transition>
@@ -67,10 +67,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(['voices', 'favorites']),
+    ...mapState(['voices', 'favourites']),
   },
   methods: {
-    ...mapActions(['addFavorite', 'removeFavorite']),
+    ...mapActions(['addFavourite', 'removeFavourite']),
     toggleSelectedVoice(voice) {
       if (this.selected && this.selected.name === voice.name) {
         this.selected = null;
@@ -79,15 +79,15 @@ export default {
       }
       this.hovering = null;
     },
-    toggleFavorite(voice) {
-      if (this.isFavorite(voice)) {
-        this.removeFavorite(voice.name);
+    toggleFavourite(voice) {
+      if (this.isFavourite(voice)) {
+        this.removeFavourite(voice.name);
       } else {
-        this.addFavorite(voice);
+        this.addFavourite(voice);
       }
     },
-    isFavorite(voice) {
-      return this.favorites.some(item => item.name === voice.name);
+    isFavourite(voice) {
+      return this.favourites.some(item => item.name === voice.name);
     },
   },
 };
@@ -118,7 +118,7 @@ export default {
   color: #c5c5c5;
   text-align: center;
 }
-.favorite-container {
+.favourite-container {
   position: absolute;
   width: 55px;
   height: 55px;
@@ -128,7 +128,7 @@ export default {
   right: 5px;
   border-radius: 50%;
 }
-.favorite-icon {
+.favourite-icon {
   position: absolute;
   top: 0;
   left: 0;

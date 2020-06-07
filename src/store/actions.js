@@ -1,8 +1,8 @@
 export default {
-  addFavorite: ({ commit }, voice) => {
-    commit('appendFavorite', voice);
+  addFavourite: ({ commit }, voice) => {
+    commit('appendFavourite', voice);
   },
-  removeFavorite: ({ commit }, voiceId) => {
-    commit('deleteFavorite', voiceId);
+  removeFavourite: ({ commit }, voiceId) => {
+    commit('deleteFavourite', voiceId);
   },
 };

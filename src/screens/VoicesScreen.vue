@@ -66,9 +66,9 @@
 
     <transition name="slide-fade">
       <VoiceList
-        v-if="favorites.length"
-        title="Favorite Voices"
-        :items="favorites"
+        v-if="favourites.length"
+        title="Favourite Voices"
+        :items="favourites"
       />
     </transition>
 
@@ -125,7 +125,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['voices', 'favorites']),
+    ...mapState(['voices', 'favourites']),
     ...mapGetters([
       'sortVoices',
       'getRandomVoice',
