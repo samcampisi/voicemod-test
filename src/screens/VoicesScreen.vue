@@ -25,7 +25,7 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
-          <b-nav-form>
+          <div class="dropdown-container">
             <img :src="require(`@/assets/filter.svg`)" class="select-icon" />
             <b-form-select
               id="selected-order"
@@ -34,9 +34,9 @@
               class="dropdown"
               @change="onFieldChange($event, 'selectedOrder')"
             ></b-form-select>
-          </b-nav-form>
+          </div>
 
-          <b-nav-form>
+          <div class="dropdown-container">
             <img :src="require(`@/assets/order.svg`)" class="select-icon" />
             <b-form-select
               id="selected-category"
@@ -45,13 +45,17 @@
               class="dropdown"
               @change="onFieldChange($event, 'selectedCategory')"
             ></b-form-select>
-          </b-nav-form>
+          </div>
 
-          <b-nav-item
+          <div
             @click="toggleRandom()"
-            :class="[showRandom && 'random-button-selected']"
-            ><img :src="require(`@/assets/button-random.svg`)"
-          /></b-nav-item>
+            class="d-flex justify-content-center align-items-center random-button-container"
+          >
+            <img
+              :src="require(`@/assets/button-random.svg`)"
+              :class="['random-button', showRandom && 'random-button-selected']"
+            />
+          </div>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -179,9 +183,21 @@ export default {
 .cancel-button:hover {
   cursor: pointer;
 }
+.random-button-container {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.random-button {
+  padding: 5px;
+}
 .random-button-selected {
   background-color: #2ed2ff;
   border-radius: 50%;
+}
+.dropdown-container {
+  display: flex;
+  padding-bottom: 15px;
+  padding-top: 15px;
 }
 .dropdown {
   /*container for custom dropdown arrow*/
@@ -196,8 +212,10 @@ export default {
   background-repeat: no-repeat;
   background-position: 95% center;
   color: #999999;
+  min-width: 7vw;
 }
 .select-icon {
-  padding-right: 5px;
+  padding-right: 7px;
+  padding-left: 20px;
 }
 </style>
