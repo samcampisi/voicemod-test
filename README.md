@@ -5,7 +5,11 @@ The design in question: https://invis.io/E5VX4173GCV
 
 It features the possibility of searching for a voice, filtering based on their categories and ordering them alphabetically.
 
-It also allows the user to save voices as a favorite and remove them from the favorite list.
+It also allows the user to save voices as a favourite and remove them from the favourite list.
+
+## Example screenshot
+
+![alt text](https://github.com/samcampisi/voicemod-test/raw/master/src/assets/example-screenshot.png 'Example')
 
 ## Project setup
 
