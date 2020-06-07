@@ -60,36 +60,49 @@
       </b-collapse>
     </b-navbar>
 
-    <VoiceList v-if="showRandom" title="Random Voice" :items="[randomItem]" />
+    <transition name="slide-fade"
+      ><VoiceList v-if="showRandom" title="Random Voice" :items="[randomItem]"
+    /></transition>
 
-    <VoiceList
-      v-if="favorites.length"
-      title="Favorite Voices"
-      :items="favorites"
-    />
-
-    <div v-if="searchQuery.length">
-      <VoiceList :title="`Results for ${searchQuery}`" :items="search()" />
-    </div>
-    <div
-      v-else-if="
-        selectedOrder === 'ascending' || selectedOrder === 'descending'
-      "
-    >
+    <transition name="slide-fade">
       <VoiceList
+        v-if="favorites.length"
+        title="Favorite Voices"
+        :items="favorites"
+      />
+    </transition>
+
+    <transition name="slide-fade">
+      <VoiceList
+        v-if="searchQuery.length"
+        :title="`Results for ${searchQuery}`"
+        :items="search()"
+      />
+    </transition>
+
+    <transition name="slide-fade">
+      <VoiceList
+        v-if="selectedOrder"
         :title="`In ${selectedOrder} order`"
         :items="sortVoices(selectedOrder)"
       />
-    </div>
-    <div v-else-if="selectedCategory">
+    </transition>
+
+    <transition name="slide-fade">
       <VoiceList
+        v-if="selectedCategory"
         :title="selectedCategory"
         :items="filterByTag(selectedCategory)"
       />
-    </div>
-    <div v-else>
-      <VoiceList title="Pro Voices" :items="voices" />
-    </div>
+    </transition>
+
+    <transition name="slide-fade">
+      <VoiceList
+        v-if="!selectedCategory && !selectedOrder && !searchQuery.length"
+        title="Pro Voices"
+        :items="voices"
+      />
+    </transition>
   </div>
 </template>
 
@@ -217,5 +230,17 @@ export default {
 .select-icon {
   padding-right: 7px;
   padding-left: 20px;
+}
+/* Animations */
+.slide-fade-enter-active {
+  transition: all 0.25s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.15s ease;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>
