@@ -24,12 +24,28 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-        <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-form-select
-            v-model="selectedOrder"
-            :options="orderOptions"
-          ></b-form-select>
+          <b-nav-form>
+            <img :src="require(`@/assets/filter.svg`)" class="select-icon" />
+            <b-form-select
+              id="selected-order"
+              v-model="selectedOrder"
+              :options="getOrdersList"
+              class="dropdown"
+              @change="onFieldChange($event, 'selectedOrder')"
+            ></b-form-select>
+          </b-nav-form>
+
+          <b-nav-form>
+            <img :src="require(`@/assets/order.svg`)" class="select-icon" />
+            <b-form-select
+              id="selected-category"
+              v-model="selectedCategory"
+              :options="getTagsList"
+              class="dropdown"
+              @change="onFieldChange($event, 'selectedCategory')"
+            ></b-form-select>
+          </b-nav-form>
 
           <b-nav-item
             @click="toggleRandom()"
@@ -41,6 +57,13 @@
     </b-navbar>
 
     <VoiceList v-if="showRandom" title="Random Voice" :items="[randomItem]" />
+
+    <VoiceList
+      v-if="favorites.length"
+      title="Favorite Voices"
+      :items="favorites"
+    />
+
     <div v-if="searchQuery.length">
       <VoiceList :title="`Results for ${searchQuery}`" :items="search()" />
     </div>
@@ -54,12 +77,13 @@
         :items="sortVoices(selectedOrder)"
       />
     </div>
-    <div v-if="!searchQuery.length">
+    <div v-else-if="selectedCategory">
       <VoiceList
-        v-if="favorites.length"
-        title="Favorite Voices"
-        :items="favorites"
+        :title="selectedCategory"
+        :items="filterByTag(selectedCategory)"
       />
+    </div>
+    <div v-else>
       <VoiceList title="Pro Voices" :items="voices" />
     </div>
   </div>
@@ -77,23 +101,26 @@ export default {
   data() {
     return {
       searchQuery: '',
-      selectedOrder: 'all',
-      orderOptions: [
-        { value: 'all', text: 'All' },
-        { value: 'ascending', text: 'Ascending Order' },
-        { value: 'descending', text: 'Descending Order' },
-      ],
+      selectedOrder: null,
+      selectedCategory: null,
       showRandom: false,
       randomItem: null,
     };
   },
   computed: {
     ...mapState(['voices', 'favorites']),
-    ...mapGetters(['sortVoices', 'getRandomVoice']),
+    ...mapGetters([
+      'sortVoices',
+      'getRandomVoice',
+      'getTagsList',
+      'filterByTag',
+      'getOrdersList',
+    ]),
   },
   methods: {
     search() {
-      this.selectedOrder = 'all';
+      this.selectedOrder = null;
+      this.selectedCategory = null;
       return this.voices.filter(item =>
         item.name.toLowerCase().includes(this.searchQuery.toLowerCase()),
       );
@@ -108,6 +135,15 @@ export default {
         this.randomItem = null;
       }
       this.showRandom = !this.showRandom;
+    },
+    resetFields() {
+      this.searchQuery = '';
+      this.selectedCategory = null;
+      this.selectedOrder = null;
+    },
+    onFieldChange(value, field) {
+      this.resetFields();
+      this[field] = value;
     },
   },
 };
@@ -146,5 +182,22 @@ export default {
 .random-button-selected {
   background-color: #2ed2ff;
   border-radius: 50%;
+}
+.dropdown {
+  /*container for custom dropdown arrow*/
+  -webkit-appearance: none;
+  -moz-appearance: window;
+  padding: 2px 40px 2px 10px;
+  border: none;
+  border-radius: 8%;
+  background-color: black;
+  background-image: url('../assets/select-arrow.svg');
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  color: #999999;
+}
+.select-icon {
+  padding-right: 5px;
 }
 </style>
